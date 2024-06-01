@@ -120,26 +120,25 @@ const onLogout = () => {
 };
 // 更换头像
 const avatarDialogVisible = ref(false);
-
-const beforeAvatarUpload = () => {
-  if (rawFile.type !== "image/jpeg") {
-    ElMessage.error("Avatar picture must be JPG format!");
-    return false;
-  } else if (rawFile.size / 1024 / 1024 > 5) {
-    ElMessage.error("Avatar picture size can not exceed 2MB!");
-    return false;
-  }
-  return true;
-};
-
 // TODO 上传头像
-const handleAvatarSuccess = (response, uploadFile) => {
-  userStore.setUserAvatar(uploadFile.raw);
-  const data = {
-    avater: uploadFile.raw,
-  };
-  setUserAvatar(data);
-};
+// const beforeAvatarUpload = () => {
+//   if (rawFile.type !== "image/jpeg") {
+//     ElMessage.error("Avatar picture must be JPG format!");
+//     return false;
+//   } else if (rawFile.size / 1024 / 1024 > 5) {
+//     ElMessage.error("Avatar picture size can not exceed 2MB!");
+//     return false;
+//   }
+//   return true;
+// };
+
+// const handleAvatarSuccess = (response, uploadFile) => {
+//   userStore.setUserAvatar(uploadFile.raw);
+//   const data = {
+//     avater: uploadFile.raw,
+//   };
+//   setUserAvatar(data);
+// };
 if (userStore.token) {
   isLogin.value = true;
   getChatNameList();
@@ -212,6 +211,7 @@ getChatNameList();
             </template>
           </el-dropdown>
         </div>
+        <!-- TODO 上传头像 -->
         <el-dialog v-model="avatarDialogVisible" title="更换头像" center>
           <el-upload
             class="avatar-uploader"
