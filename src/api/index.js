@@ -18,4 +18,8 @@ export const registerService = (data) =>
 
 export const sendNewMessage = (data) => request.post(`/chat`, data);
 
-export const getUserAvater = () => request.get("/avater/{userId}");
+export const getUserAvatar = () => request.get("/avatar/user");
+
+export const getRobotAvatar = () => request.get("/avatar/robot");
+
+export const setUserAvatar = (data) => request.post("/avatar/user", data);

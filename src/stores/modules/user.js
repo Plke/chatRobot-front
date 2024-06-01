@@ -1,4 +1,4 @@
-// import { getUserAvater } from "@/api/user";
+import { getUserAvatar, getRobotAvatar } from "@/api";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
@@ -6,31 +6,42 @@ export const useUserStore = defineStore(
   "chatRobot-user",
   () => {
     const token = ref("");
-    const robotAvater = ref("");
-    const userAvater = ref("");
+    const robotAvatar = ref("");
+    const userAvatar = ref("");
+    const isLogin = ref(false);
     const setToken = (newToken) => {
       token.value = newToken;
+      setUserAvatar();
+      setRobotAvatar();
     };
     const removeUser = () => {
-      robotAvater.value = "";
+      robotAvatar.value = "";
       token.value = "";
-      userAvater.value = "";
+      userAvatar.value = "";
+      isLogin.value = false;
     };
-    const setRobotAvater = (newAvater) => {
-      robotAvater.value = newAvater;
+    const setRobotAvatar = async () => {
+      const avatar = await getRobotAvatar();
+      robotAvatar.value = avatar.data.data;
     };
-    const setUserAvater = (newAvater) => {
-      userAvater.value = newAvater;
+    const setUserAvatar = async () => {
+      const avatar = await getUserAvatar();
+      userAvatar.value = avatar.data.data;
     };
+    const setIsLogin = (newIsLogin) => {
+      isLogin.value = newIsLogin;
+    }
 
     return {
       token,
+      isLogin,
       setToken,
       removeUser,
-      robotAvater,
-      userAvater,
-      setRobotAvater,
-      setUserAvater,
+      robotAvatar,
+      userAvatar,
+      setRobotAvatar,
+      setUserAvatar,
+      setIsLogin
     };
   },
   {

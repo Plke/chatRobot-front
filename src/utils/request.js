@@ -1,11 +1,10 @@
 import axios from "axios";
-import { useUserStore } from "@/stores";
+import { useUserStore, useChatStore } from "@/stores";
 
 import { ElMessage } from "element-plus";
 
 // import router from "@/router";
 const baseURL = "http://localhost:8080/";
-
 const instance = axios.create({
   // TODO 1. 基础地址，超时时间
   baseURL,
@@ -38,9 +37,14 @@ instance.interceptors.response.use(
     return Promise.reject(res.data);
   },
   (err) => {
+    console.log(err.response);
     // 特殊情况 401 权限不足，token过期
     if (err.response?.status === 401) {
-      router.push("/login");
+      const userStore = useUserStore();
+      const chatStore = useChatStore();
+      ElMessage.error("请先登录");
+      userStore.removeUser();
+      chatStore.removeChat();
     }
     ElMessage.error(err.response.message || "服务异常");
     // TODO 5. 处理401错误
