@@ -131,6 +131,8 @@ const beforeAvatarUpload = () => {
   }
   return true;
 };
+
+// TODO 上传头像
 const handleAvatarSuccess = (response, uploadFile) => {
   userStore.setUserAvatar(uploadFile.raw);
   const data = {
@@ -213,7 +215,7 @@ getChatNameList();
         <el-dialog v-model="avatarDialogVisible" title="更换头像" center>
           <el-upload
             class="avatar-uploader"
-            :action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+            action="http://localhost:8080/upload"
             :show-file-list="false"
             auto-upload="false"
             :on-success="handleAvatarSuccess"
